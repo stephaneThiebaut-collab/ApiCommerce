@@ -259,3 +259,4 @@
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.pdb
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.genruntimeconfig.cache
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ref/ApiCommerce.dll
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.sourcelink.json
