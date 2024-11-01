@@ -9,6 +9,7 @@
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/Azure.Identity.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/BCrypt.Net-Next.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/Humanizer.dll
+/home/alkantarade/ApiCommerce/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/Microsoft.AspNetCore.Razor.Language.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/Microsoft.Build.dll
@@ -245,6 +246,7 @@
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.csproj.CoreCompileInputs.cache
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.MvcApplicationPartsAssemblyInfo.cs
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.MvcApplicationPartsAssemblyInfo.cache
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.sourcelink.json
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/staticwebassets.build.json
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/staticwebassets.development.json
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/staticwebassets/msbuild.ApiCommerce.Microsoft.AspNetCore.StaticWebAssets.props
@@ -259,4 +261,3 @@
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.pdb
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.genruntimeconfig.cache
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/ref/ApiCommerce.dll
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.sourcelink.json

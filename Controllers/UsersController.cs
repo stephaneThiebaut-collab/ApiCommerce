@@ -97,6 +97,21 @@ namespace ApiCommerce.Controllers
             //return CreatedAtAction("GetUsers", new { id = users.Id }, users);
         }
 
+        [HttpPost("Connexion")]
+        public async Task<ActionResult<Models.UsersConnexion>> ConnexionUser(UsersConnexion usersConnexion)
+        {
+            try
+            {
+                await _context.ConnexionUser(usersConnexion);
+                return usersConnexion;
+            }
+            catch (System.Exception ex)
+            {
+                
+                throw new Exception($"Une erreur est survenue lors de la connexion {ex.Message}");
+            }
+        }
+
         // DELETE: api/Users/5
         // [HttpDelete("{id}")]
         // public async Task<IActionResult> DeleteUsers(int id)
