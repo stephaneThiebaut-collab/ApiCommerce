@@ -14,6 +14,7 @@ builder.Services.AddDbContext<UsersContext>(opt => opt.UseInMemoryDatabase("User
 builder.Services.AddTransient(x => new MySqlConnection(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer();
+builder.Services.AddSingleton<TokenController>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

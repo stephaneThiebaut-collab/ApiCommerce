@@ -9,6 +9,9 @@ using ApiCommerce.Models;
 using TodoApi.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
+using ApiCommerce.Controllers;
+using BC = BCrypt.Net.BCrypt;
 
 namespace ApiCommerce.Controllers
 {
@@ -17,10 +20,12 @@ namespace ApiCommerce.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UsersContext _context;
+        private readonly TokenController _tokenController;
 
-        public UsersController(UsersContext context)
+        public UsersController(UsersContext context, TokenController tokenContext)
         {
             _context = context;
+            _tokenController = tokenContext;       
         }
 
         // GET: api/Users
@@ -77,6 +82,7 @@ namespace ApiCommerce.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPost("Inscription")]
         public async Task<ActionResult<Users>> PostUsers(Users users)
         {
@@ -100,10 +106,36 @@ namespace ApiCommerce.Controllers
         [HttpPost("Connexion")]
         public async Task<ActionResult<Models.UsersConnexion>> ConnexionUser(UsersConnexion usersConnexion)
         {
+            List<ReponseConnexion> reponseConnexions = new List<ReponseConnexion>();
             try
             {
-                await _context.ConnexionUser(usersConnexion);
-                return usersConnexion;
+                var dataUsersConnexions = await _context.ConnexionUser(usersConnexion);
+                // Console.WriteLine(usersConnexion.email + usersConnexion.password);
+                var uuidUser = dataUsersConnexions[0].Uuid;
+                if (dataUsersConnexions.Count > 0 && uuidUser != null)
+                {
+                    string passwordHashUser = dataUsersConnexions[0].Password;
+                    string emailUser = dataUsersConnexions[0].Email;
+                    
+                    Console.WriteLine(uuidUser);
+                    bool verifyPassword = BC.Verify(usersConnexion.Password, passwordHashUser);
+                    if (verifyPassword)
+                    {
+                        //Console.WriteLine(_tokenController.GenerateToken("stephane"));
+                        //reponseConnexions.Add(new ReponseConnexion { Message = "Vous etes connecter", Token = string.Empty});
+                        return Ok(new ReponseConnexion { Message = "Vous etes connecter", Token = _tokenController.GenerateToken(uuidUser).ToString()});
+                    }
+                    else
+                    {
+                        //reponseConnexions.Add(new ReponseConnexion { Message = "Mot de passe incorrecte", Token = string.Empty});
+                        return Unauthorized(new ReponseConnexion { Message = "Mot de passe incorrecte", Token = string.Empty});
+                    }
+                }
+                else 
+                {
+                    //reponseConnexions.Add(new ReponseConnexion { Message = "utilisateur inconnue", Token = string.Empty});
+                    return Unauthorized(new ReponseConnexion { Message = "utilisateur inconnue", Token = string.Empty});
+                }
             }
             catch (System.Exception ex)
             {
