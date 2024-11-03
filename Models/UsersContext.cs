@@ -98,20 +98,4 @@ public class UsersContext : DbContext
         }
         
     }
-
-    internal Task<ActionResult<IEnumerable<Users>>> ToListAsync()
-    {
-        try
-        {
-            List<Users> users = new List<Users>
-            {
-                new Users { Id = 1, uuid = "fdgvhcjxwlvbdfb", name = "Stephane", last_name = "Thiebaut", email = "stephanethiebautjob@gmail.com" }
-            };
-            return Task.FromResult<ActionResult<IEnumerable<Users>>>(users);
-        }
-        catch (System.Exception)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

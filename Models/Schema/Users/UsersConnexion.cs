@@ -8,5 +8,5 @@ public class UsersConnexion
     [Required]
     public string Password {get; set;} = string.Empty;
 
-    public string? Uuid {get; set;}
+    public string? Uuid {get; set;} = "";
 }
