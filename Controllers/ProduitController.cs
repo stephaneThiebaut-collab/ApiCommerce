@@ -56,7 +56,9 @@ namespace ApiCommerce.Controllers
                 if (ModelState.IsValid)
                 {
                     await _context.UpdateProduit(id, produit);
-                    return Ok("Produit modifié");
+                    
+                    var response = new { success = true, message = "Produit modifié" };
+                    return Ok(response);
                 }
                 else
                 {
@@ -67,6 +69,22 @@ namespace ApiCommerce.Controllers
             {
                 
                 throw new Exception($"Une erreur est survenue {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [HttpGet("User/All-Produit-User")]
+        public async Task<ActionResult<IEnumerable<InforProduit>>> GetProduitUser()
+        {
+            try
+            {
+                return await _context.getOneProduitByUser();
+            }
+            catch (System.Exception)
+            {
+                
+                var err = new { success = false, message = "Un utilisateur existe deja avec cette email" };
+                return Unauthorized(err);
             }
         }
 
@@ -96,10 +114,12 @@ namespace ApiCommerce.Controllers
                 var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
                 if (string.IsNullOrEmpty(token) || !token.StartsWith("Bearer "))
                 {
+                    
                     return Unauthorized("Vous devez être connecté pour effectuer cette action");
                 }
                 await _context.DeleteProduct(uuid);
-                return Ok("Le produit a bien été supprimé");
+                var response = new { success = true, message = "Produit modifié" };
+                return Ok(response);
             }
             catch (System.Exception ex)
             {

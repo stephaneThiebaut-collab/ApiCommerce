@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 
-public class ProduitContext: DbContext
+public class ProduitContext : DbContext
 {
     private protected string connectionString = "Server=localhost; User ID=admin; Password=753159852456; Database=DBCommerce";
     private readonly TokenController _tokenController;
@@ -20,14 +20,14 @@ public class ProduitContext: DbContext
         _tokenController = tokenController;
         _httpContextAccessor = httpContextAccessor;
     }
-    public DbSet<Produit> produits {get; set;} = null!;
+    public DbSet<Produit> produits { get; set; } = null!;
 
     public async Task AddProduitDb(Produit produit)
     {
-    try
+        try
         {
             var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
-            
+
             if (token != null)
             {
                 var claims = _tokenController.DecodeToken(token.ToString().Split(" ")[1]);
@@ -76,7 +76,7 @@ public class ProduitContext: DbContext
                         throw new Exception("Utilisateur inconnue");
                     }
                 }
-                else 
+                else
                 {
                     throw new Exception("Vous devez être connecter pour effectuer cette action");
                 }
@@ -98,18 +98,18 @@ public class ProduitContext: DbContext
                 var claims = _tokenController.DecodeToken(token.ToString().Split(" ")[1]);
                 if (claims.TryGetValue(JwtRegisteredClaimNames.Sub, out var userId))
                 {
-                
-                using var connection = new MySqlConnection(connectionString);
-                await connection.OpenAsync();
 
-                using var command = connection.CreateCommand();
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@userId", userId);
+                    using var connection = new MySqlConnection(connectionString);
+                    await connection.OpenAsync();
 
-                command.CommandText = @"SELECT DISTINCT p.uuid AS uuidProduit, p.uuid_user, p.name_produit, p.total_produit, p.price_produit,p.description FROM Produit p, users u WHERE p.uuid = @id AND p.uuid_user = @userId;";
-                
-                await using var reader = await command.ExecuteReaderAsync();
-                
+                    using var command = connection.CreateCommand();
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                    command.CommandText = @"SELECT DISTINCT p.uuid AS uuidProduit, p.uuid_user, p.name_produit, p.total_produit, p.price_produit,p.description FROM Produit p, users u WHERE p.uuid = @id AND p.uuid_user = @userId;";
+
+                    await using var reader = await command.ExecuteReaderAsync();
+
                     if (reader.HasRows)
                     {
                         await reader.DisposeAsync();
@@ -125,9 +125,9 @@ public class ProduitContext: DbContext
                         var rowsAsAffected = await command.ExecuteNonQueryAsync();
 
                         connection.Close();
-                        
+
                         return rowsAsAffected > 0;
-                        
+
                     }
                     else
                     {
@@ -139,7 +139,7 @@ public class ProduitContext: DbContext
             {
                 throw new Exception("Vous devez être connecter pour effectuer cette action");
             }
-        return true;
+            return true;
         }
         catch (System.Exception ex)
         {
@@ -198,16 +198,17 @@ public class ProduitContext: DbContext
                 connection.Close();
                 return new List<InforProduit>();
             }
-            
+
         }
         catch (System.Exception)
         {
-            
+
             throw;
         }
     }
 
-    public async Task<bool> DeleteProduct(string uuid){
+    public async Task<bool> DeleteProduct(string uuid)
+    {
 
         var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
         if (token != null)
@@ -221,7 +222,7 @@ public class ProduitContext: DbContext
                 using var command = connection.CreateCommand();
                 command.Parameters.AddWithValue("@uuid", userId);
                 command.CommandText = @"SELECT * FROM users WHERE uuid = @uuid";
-                
+
                 await using var reader = await command.ExecuteReaderAsync();
                 if (reader.HasRows)
                 {
@@ -245,7 +246,7 @@ public class ProduitContext: DbContext
                         var rowsAsAffected = command.ExecuteNonQuery();
                         return rowsAsAffected > 0;
                     }
-                    else 
+                    else
                     {
                         throw new Exception("Vous ne disposez pas des droits n'essaire pour effectuer cette action");
                     }
@@ -260,10 +261,75 @@ public class ProduitContext: DbContext
                 throw new Exception("Vous devez être connecter pour effectuer cette action");
             }
         }
-        else 
+        else
         {
             throw new Exception("Vous devez être connecter pour effectuer cette action");
         }
     }
 
+
+    public async Task<ActionResult<IEnumerable<InforProduit>>> getOneProduitByUser()
+    {
+        try
+        {
+            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new Exception("Authorization header is missing or invalid.");
+            }
+
+            var claims = _tokenController.DecodeToken(token.ToString().Split(" ")[1]);
+            if (claims.TryGetValue(JwtRegisteredClaimNames.Sub, out var userId))
+            {
+                await using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                await using var command = connection.CreateCommand();
+                command.Parameters.AddWithValue("@uuid", userId);
+                command.CommandText = @"SELECT * FROM Produit WHERE uuid_user = @uuid";
+
+                await using var reader = await command.ExecuteReaderAsync();
+                List<InforProduit> inforProduits = new List<InforProduit>();
+
+                var uuidProduit = "";
+                var uuid_user = "";
+                var name_produit = "";
+                int total_produit = 0;
+                decimal price_produit = 0.0m;
+                var description = "";
+                while (await reader.ReadAsync())
+                {
+                    uuidProduit = reader["uuid"].ToString();
+                    uuid_user = reader["uuid_user"].ToString();
+                    name_produit = reader["name_produit"].ToString();
+                    total_produit = (int)reader["total_produit"];
+                    price_produit = (decimal)reader["price_produit"];
+                    description = reader["description"].ToString();
+                    if (uuidProduit != null && uuid_user != null && name_produit != null && description != null)
+                    {
+                        var produit = new InforProduit
+                        {
+                            Uuid = uuidProduit,
+                            Uuid_user = uuid_user,
+                            Name_produit = name_produit,
+                            Total_produit = total_produit,
+                            Price_produit = price_produit,
+                            description = description
+                        };
+                        inforProduits.Add(produit);
+                    }
+                }
+
+                return inforProduits;
+            }
+            else
+            {
+                throw new Exception("Vous devez être connecter pour effectuer cette action");
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("Vous devez être connecter pour effectuer cette action");
+        }
+    }
 }

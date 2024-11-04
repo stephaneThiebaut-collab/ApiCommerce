@@ -36,13 +36,14 @@ namespace ApiCommerce.Controllers
             try
             {
                 await _context.AddUsersAsync(users);
-
-                return Ok("Votre inscription a bien été pris en compte");
+                var response = new { success = true, message = "Inscription réussie" };
+                return Ok(response);
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                
-                throw new Exception($"Erreur lors de l'ajout de l'utilisateur {ex.Message}");
+                var err = new { success = false, message = "Un utilisateur existe deja avec cette email" };
+                return Unauthorized(err);
+                //throw new Exception($"Erreur lors de l'ajout de l'utilisateur {ex.Message}");
             }
         }
 
@@ -77,7 +78,7 @@ namespace ApiCommerce.Controllers
             }
             catch (System.Exception ex)
             {
-                
+                return Unauthorized(new ReponseConnexion { Message = "Utilisateur inconnue ou mot de passe incorrecte", Token = string.Empty});
                 throw new Exception($"Une erreur est survenue lors de la connexion {ex.Message}");
             }
         }

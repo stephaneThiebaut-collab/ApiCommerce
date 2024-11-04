@@ -38,6 +38,13 @@ builder.Services.AddAuthentication(x => {
         ValidateAudience = false
     };
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy => policy.WithOrigins("http://localhost:4200")  // Remplace par l'URL de ton front-end Angular
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -48,6 +55,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAngularApp");
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,3 +1,11 @@
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.csproj.AssemblyReference.cache
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.GeneratedMSBuildEditorConfig.editorconfig
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.AssemblyInfoInputs.cache
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.AssemblyInfo.cs
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.csproj.CoreCompileInputs.cache
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.MvcApplicationPartsAssemblyInfo.cs
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.MvcApplicationPartsAssemblyInfo.cache
+/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.sourcelink.json
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/appsettings.Development.json
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/appsettings.json
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/ApiCommerce
@@ -239,14 +247,6 @@
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Runtime.Caching.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.dll
 /home/alkantarade/ApiCommerce/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Windows.Extensions.dll
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.csproj.AssemblyReference.cache
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.GeneratedMSBuildEditorConfig.editorconfig
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.AssemblyInfoInputs.cache
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.AssemblyInfo.cs
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.csproj.CoreCompileInputs.cache
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.MvcApplicationPartsAssemblyInfo.cs
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.MvcApplicationPartsAssemblyInfo.cache
-/home/alkantarade/ApiCommerce/obj/Debug/net8.0/ApiCommerce.sourcelink.json
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/staticwebassets.build.json
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/staticwebassets.development.json
 /home/alkantarade/ApiCommerce/obj/Debug/net8.0/staticwebassets/msbuild.ApiCommerce.Microsoft.AspNetCore.StaticWebAssets.props
